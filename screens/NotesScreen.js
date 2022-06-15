@@ -39,9 +39,20 @@ export default function NotesScreen({ navigation, route }) {
         done: false,
         id: notes.length.toString(),
       };
+      firebase.firestore().collection("todos").add(newNote);
       setNotes([...notes, newNote]);
     }
   }, [route.params?.text]);
+
+  useEffect(()=>{
+    const unsubscribe = firebase
+    .firestore()
+    .collection("todos")
+    .onSnapshot((collection)=>{
+      const updatedNotes = collection.docs.map((doc)=>doc.data())
+      setNotes (updatedNotes)
+    });
+  });
 
   function addNote() {
     navigation.navigate("Add Screen");
