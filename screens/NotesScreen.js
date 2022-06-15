@@ -52,7 +52,8 @@ export default function NotesScreen({ navigation, route }) {
       const updatedNotes = collection.docs.map((doc)=>doc.data())
       setNotes (updatedNotes)
     });
-  });
+    return()=> unsubscribe();
+  },[]);
 
   function addNote() {
     navigation.navigate("Add Screen");
