@@ -36,9 +36,12 @@ export default function NotesScreen({ navigation, route }) {
   // Monitor route.params for changes and add items to the database
   useEffect(() => {
     if (route.params?.text) {
+      
       const newNote = {
         title: route.params.text,
         done: false,
+        created: firebase.firestore.FieldValue.serverTimestamp(),
+        
       };
       
       db.add(newNote);
@@ -46,7 +49,7 @@ export default function NotesScreen({ navigation, route }) {
   }, [route.params?.text]);
 
   useEffect(()=>{
-    const unsubscribe = db.onSnapshot((collection)=>{
+    const unsubscribe = db.orderBy("created").onSnapshot((collection)=>{
       const updatedNotes = collection.docs.map((doc)=>{
 
       const noteObject = {
