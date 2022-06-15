@@ -11,13 +11,6 @@ import { Ionicons } from "@expo/vector-icons";
 
 export default function NotesScreen({ navigation, route }) {
   const [notes, setNotes] = useState([]);
-  firebase.firestore().collection("testing").add({
-    title: "testing",
-    body: "checking if this works",
-    potato: true,
-    questions: 'what?'
-  })
-
 
   // This is to set up the top right button
   useEffect(() => {
